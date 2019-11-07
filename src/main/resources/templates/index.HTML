@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace = "fragments :: head">
+
+</head>
+<body>
+<form method="POST" action="">
+    <label>First Name<input name = "firstName"/></label>
+    <label>Last Name<input name="lastName" /></label>
+    <button>Submit</button>
+</form>
+<div id = "refr">
+<table th:replace =" fragments :: table1" >
+
+</table>
+</div>
+</body>
+</html>
