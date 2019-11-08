@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/host.js}"></script>
+    <style>
+        canvas{
+    display:block;
+    border:2px solid #0094ff;
+    width:500px;
+    height:500px;
+     }
+    </style>
+</head>
+<body>
+
+    <canvas id="canv" ></canvas>
+
+<div id = "refr">
+<table th:replace =" fragments :: table1" >
+
+</table>
+</div>
+</body>
+</html>
