@@ -15,8 +15,12 @@
 <body>
 
 <canvas id="canv" ></canvas>
+<form>
+
+</form>
 <div id = "refr">
         <input type="hidden" id="all" name="all" th:value="${all}"/>
+    <input type="hidden" id="gamename" name="gamename" th:value="${gamename}"/>
     <table th:replace =" fragments :: table1" >
 
     </table>

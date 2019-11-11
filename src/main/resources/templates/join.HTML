@@ -5,6 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-
+  <table>
+      <thead></thead>
+      <tr th:each="game : ${allgames}">
+          <td th:text = "${game}"></td>
+          <td><form method="GET" th:action="@{${game}+'/guess'}">
+              <button type="submit">join</button>
+          </form>
+          </td>
+      </tr>
+  </table>
 </body>
 </html>

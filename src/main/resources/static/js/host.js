@@ -2,6 +2,8 @@
 console.log('j');
 window.onload = function(){
 let clicked = false;
+let gameName = $("#gamename").val();
+//let gamename = document.getElementById("gamename").value;
    function getMousePos(canvas,evt){
     let rect = canvas.getBoundingClientRect();
         return {
@@ -33,7 +35,7 @@ let clicked = false;
       let sen = setInterval(()=>{
              $.ajax({
                     type: "POST",
-                    url: "/imagesave",
+                    url: "/"+gameName+"/imagesave",
                     data: {
                        arrays: arr.join(" "),
                     }

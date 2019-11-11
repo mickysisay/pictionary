@@ -3,7 +3,7 @@ window.onload=()=>{
   let canvas = document.getElementById('canv');
   let context = canvas.getContext('2d');
   let all = $("#all").val()
-  
+  let gameName = $("#gamename").val();
   arr= all.split(" ");
   for(let i=0;i<arr.length;i++){
   let arrx = arr[i].split(",");
@@ -14,7 +14,7 @@ window.onload=()=>{
     
       $.ajax({
            type: "GET",
-           url: "/imagesave",
+           url: "/"+gameName+"/imagesave",
            success:function(response){
                  //console.log(response);
                  //console.log(document.getElementById("refr"));

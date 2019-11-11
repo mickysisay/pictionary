@@ -1,65 +1,100 @@
 package org.mickysisay.pictionary.controllers;
 
 
+import org.mickysisay.pictionary.models.Allgames;
+import org.mickysisay.pictionary.models.Exchangepixel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
 @Controller
 public class Homepagecontroller {
-    static HashMap<String,String> hello = new HashMap<>();
-    static {
-        hello.put("micky","sisay");
-        hello.put("robel","ambachew");
-    }
-    public static String url;
-    public static String all="";
-    @RequestMapping(value = "/hello" ,method= RequestMethod.GET )
+    private static Allgames allgame = new Allgames();
+    private static String url;
+    private static String all="";
+    //contains all the pixels url and all separated by "//"
+    private static HashMap<String, Exchangepixel> containPixels= new HashMap<>();
+    @RequestMapping(value = "" ,method= RequestMethod.GET )
 
-    public static String helloController(Model model){
-        model.addAttribute("hello",hello);
+    public static String helloController(Model model)
+    {
         return "index";
      }
-    @RequestMapping(value = "/host" ,method= RequestMethod.GET )
+     @RequestMapping(value = "/create" , method= RequestMethod.GET )
+     public static String createGetGame(){
+        return "create";
+     }
+     @RequestMapping(value = "/create", method= RequestMethod.POST )
+     public static String createGame(Model model,@RequestParam (value = "gameName") String gameName){
 
-    public static String hostController(Model model){
-        model.addAttribute("hello",hello);
-        return "host.html";
+        if(allgame.gameExists(gameName)) {
+            model.addAttribute("error","sorry game name exists");
+            return "create";
+        }else{
+            allgame.addGame(gameName);
+            return "redirect:/"+gameName+"/host";
+        }
+     }
+     @RequestMapping(value = "/join")
+     public static String joinGame(Model model){
+        model.addAttribute("allgames",allgame.getGames());
+
+         return "join";
+     }
+    @RequestMapping(value = "/{gamename}/host" ,method= RequestMethod.GET )
+
+    public static String hostController(Model model, @PathVariable String gamename){
+        if(allgame.gameExists(gamename)){
+            containPixels.put(gamename,new Exchangepixel());
+            model.addAttribute("gamename",gamename);
+            //creates pixel transmission
+            return "host.html";
+        }else{
+            return "redirect:/create";
+        }
+
     }
-    @RequestMapping(value = "/guess" ,method= RequestMethod.GET )
+    @RequestMapping(value = "{gamename}/guess" ,method= RequestMethod.GET )
 
-    public static String guessController(Model model){
+    public static String guessController(Model model,@PathVariable String gamename){
         model.addAttribute("all",all);
+        if(allgame.gameExists(gamename)){
+            model.addAttribute("gamename",gamename);
+            return "guess.html";
+        }else {
+            return "redirect:/join";
+        }
+    }
 
-        return "guess.html";
-    }
-    @RequestMapping(value ="/hello",method=RequestMethod.POST)
-    public static String addController(@RequestParam String firstName , @RequestParam String lastName){
-      hello.put(firstName,lastName);
-        return "redirect:/hello";
-    }
     @RequestMapping(value ="/hellos",method=RequestMethod.GET)
     public static String changeController(Model model){
-        model.addAttribute("hello",hello);
+
         return "fragments :: table1";
     }
-    @RequestMapping(value ="/imagesave",method=RequestMethod.GET)
+    @RequestMapping(value ="{gamename}/imagesave",method=RequestMethod.GET)
     @ResponseBody
-    public static String imageController(Model model){
+    public static String imageController(Model model,@PathVariable String gamename){
        // model.addAttribute("hello",hello);
-        return url;
+        return containPixels.get(gamename).getUrl();
+        //return url;
     }
-    @RequestMapping(value ="/imagesave",method=RequestMethod.POST)
+    @RequestMapping(value ="{gamename}/imagesave",method=RequestMethod.POST)
     @ResponseBody
-    public static String imagePostController(Model model,@RequestParam(value = "arrays") String arr){
+    public static String imagePostController(Model model,@RequestParam(value = "arrays") String arr,@PathVariable String gamename){
         // model.addAttribute("hello",hello);
-        all=all+" "+arr;
-        url = arr;
+        //gets object
+        Exchangepixel allGame= containPixels.get(gamename);
+        //changes value of all in object
+        allGame.setAll(allGame.getAll()+ " "+arr);
+        //changes value of url
+        allGame.setUrl(arr);
+        //puts it back
+        containPixels.put(gamename,allGame);
+
+//        all=all+" "+arr;
+//        url = arr;
        return "url";
     }
 }
