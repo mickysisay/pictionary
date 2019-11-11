@@ -13,9 +13,17 @@
     </style>
 </head>
 <body>
-
-    <canvas id="canv" ></canvas>
-    <input type="hidden" id="gamename" name="gamename" th:value="${gamename}"/>
+<div class="container">
+    <div class="row">
+        <div class ="col-md-9">
+        <canvas id="canv" ></canvas>
+        </div>
+        <div class="col-md-3">
+          <div th:each="users : ${allUsers}" th:text="${users}"></div>
+        </div>
+    </div>
+</div>
+        <input type="hidden" id="gamename" name="gamename" th:value="${gamename}"/>
 <div id = "refr">
 
 <table th:replace =" fragments :: table1" >

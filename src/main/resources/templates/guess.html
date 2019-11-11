@@ -14,9 +14,20 @@
 </head>
 <body>
 
-<canvas id="canv" ></canvas>
-<form>
 
+<div class="container">
+    <div class="row">
+        <div class ="col-md-9">
+            <canvas id="canv" ></canvas>
+        </div>
+        <div class="col-md-3">
+            <div th:each="users : ${allUsers}" th:text="${users}"></div>
+        </div>
+    </div>
+</div>
+<form>
+ <input name="answer" />
+  <button type="submit">Guess</button>
 </form>
 <div id = "refr">
         <input type="hidden" id="all" name="all" th:value="${all}"/>
