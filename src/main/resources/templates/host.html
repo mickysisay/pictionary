@@ -13,12 +13,13 @@
     </style>
 </head>
 <body>
+<div th:text="${word}"></div>
 <div class="container">
     <div class="row">
-        <div class ="col-md-9">
+        <div class ="col-md-6">
         <canvas id="canv" ></canvas>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
           <div th:each="users : ${allUsers}" th:text="${users}"></div>
         </div>
     </div>

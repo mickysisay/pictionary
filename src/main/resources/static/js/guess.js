@@ -9,6 +9,18 @@ window.onload=()=>{
   let arrx = arr[i].split(",");
      context.fillRect(arrx[0],arrx[1], 3, 1.5);
   }
+   document.getElementById("guess").addEventListener("click",()=>{
+    $.ajax({
+           type: "GET",
+           url: "/"+gameName+"/answercheck",
+           data:{
+            answer:document.getElementById("answer").value,
+           },
+           success: function(response){
+                document.getElementById("status").innerHTML = response;
+           }
+        });
+   });
 
   let pic = setInterval(function(){
     

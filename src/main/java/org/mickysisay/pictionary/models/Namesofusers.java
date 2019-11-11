@@ -12,10 +12,13 @@ public class Namesofusers {
                ArrayList<String> all = new ArrayList<>();
                all.add(userName);
                allUsers.put(gameName, all);
-               System.out.println(allUsers.get(gameName));
+
            }else {
+
                ArrayList<String> all = allUsers.get(gameName);
-               all.add(userName);
+               if(!all.contains(userName)) {
+                   all.add(userName);
+               }
                allUsers.put(gameName, all);
            }
        }catch(Exception e){
